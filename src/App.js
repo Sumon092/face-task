@@ -7,6 +7,7 @@ import SignUp from './Pages/Login/SignUp';
 import Navbar from './Pages/Shared/Navbar';
 import backgroundImage from './assets/home/rm218batch4-ning-34.jpg'
 import RequiredAuth from './Pages/Login/RequiredAuth';
+import Contact from './Pages/Contact';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<RequiredAuth><Home></Home></RequiredAuth>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signUp' element={<SignUp></SignUp>}></Route>
+        <Route path='/contact' element={<Contact></Contact>}></Route>
       </Routes>
     </div>
   );
