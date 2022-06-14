@@ -4,7 +4,7 @@ import Loading from './Shared/Loading';
 import UserInfo from './UserInfo';
 
 const Contact = (id) => {
-    const { data: users, isLoading, refetch } = useQuery('products', () => fetch('https://randomuser.me/api/?results=500').then(res => res.json()));
+    const { data: users, isLoading } = useQuery('products', () => fetch('https://randomuser.me/api/?results=500').then(res => res.json()));
     if (isLoading) {
         return <Loading></Loading>
     }
@@ -12,7 +12,6 @@ const Contact = (id) => {
     const allUser = users.results;
     return (
         <div className='lg:px-24 px-0'>
-            <h2>There are {users.results.length}</h2>
 
             {
                 <table class="table w-full">
@@ -22,7 +21,7 @@ const Contact = (id) => {
                             <th>Name</th>
                             <th>Location</th>
                             <th>Phone</th>
-                            <th></th>
+                            <th>Detail</th>
                         </tr>
                     </thead>
                     {
