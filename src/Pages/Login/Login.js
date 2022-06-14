@@ -21,12 +21,11 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
-    // const [token] = useToken(user || gUser);
 
     let signInError;
     const navigate = useNavigate();
     const location = useLocation();
-    let from = location.state?.from?.pathname || "/home";
+    let from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         if (user || gUser) {

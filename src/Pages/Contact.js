@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import Loading from './Shared/Loading';
+import UserInfo from './UserInfo';
 
-const Contact = () => {
-    const [user, setUser] = useState('');
-    useEffect(() => {
-        fetch('https://randomuser.me/api/?results=500')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.results.length);
-                setUser(data)
-            })
-    }, [])
+const Contact = (id) => {
+    const { data: users, isLoading, refetch } = useQuery('products', () => fetch('https://randomuser.me/api/?results=500').then(res => res.json()));
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+    console.log(users);
+    const allUser = users.results;
     return (
-        <div>
-            <h2>user {user.results.length}</h2>
+        <div className='lg:px-24 px-0'>
+            <h2>There are {users.results.length}</h2>
+
+            {
+                <table class="table w-full">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Phone</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    {
+                        allUser.map(user => <UserInfo key={user.cell} user={user}></UserInfo>)
+                    }
+                </table>
+            }
         </div>
     );
 };
