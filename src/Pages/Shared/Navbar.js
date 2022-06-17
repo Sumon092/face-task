@@ -1,5 +1,8 @@
+import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, NavLink } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 
 
@@ -7,6 +10,10 @@ import { Link, NavLink } from 'react-router-dom';
 
 
 const Navbar = () => {
+    const [user] = useAuthState(auth);
+    const logout = () => {
+        signOut(auth)
+    }
     const [navBar, setNavBar] = useState(false);
     const changeBackground = () => {
         if (window.scrollY >= 60) {
@@ -27,24 +34,34 @@ const Navbar = () => {
                         </svg>
                     </label>
                     <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow font-bold bg-white rounded-box w-52">
-                        <li><Link to='/'>HOME</Link></li>
-                        <li><Link to='/contact'>CONTACT</Link></li>
-                        <li><Link to='/about'>ABOUT</Link></li>
+                        {user && <li><Link to='/'>HOME</Link></li>}
+                        {user && <li><Link to='/contact'>CONTACT</Link></li>}
+                        {user && <li><Link to='/about'>ABOUT</Link></li>}
+                        {user ?
+                            <Link onClick={logout} to='/login' className="btn btn-primary font-serif">Sign Out</Link>
+                            :
+                            <Link to='/login' className="uppercase font-bold font-serif">Login</Link>
+                        }
                     </ul>
                 </div>
             </div>
 
             <div className="navbar-end hidden lg:flex justify-center items-center">
                 <ul className="menu menu-horizontal p-0 font-bold">
-                    <li>
+                    {user && <li>
                         <NavLink to='/home' className={({ isActive }) => isActive ? 'text-warning' : ''}>HOME</NavLink>
-                    </li>
-                    <li>
+                    </li>}
+                    {user && <li>
                         <NavLink to='/contact' className={({ isActive }) => isActive ? 'text-warning' : ''}>CONTACT</NavLink>
-                    </li>
-                    <li>
+                    </li>}
+                    {user && <li>
                         <NavLink to='/about' className={({ isActive }) => isActive ? 'text-warning' : ''}>ABOUT</NavLink>
-                    </li>
+                    </li>}
+                    {user ?
+                        <NavLink onClick={logout} to='/login' className="uppercase font-bold mt-3 ml-2">Sign Out</NavLink>
+                        :
+                        ''
+                    }
 
                 </ul>
             </div>
