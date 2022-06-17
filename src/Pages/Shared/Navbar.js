@@ -4,6 +4,11 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, NavLink } from 'react-router-dom';
 import auth from '../../firebase.init';
 
+
+
+
+
+
 const Navbar = () => {
     const [user] = useAuthState(auth);
     const logout = () => {
@@ -55,7 +60,7 @@ const Navbar = () => {
                     {user ?
                         <NavLink onClick={logout} to='/login' className="uppercase font-bold mt-3 ml-2">Sign Out</NavLink>
                         :
-                        ''
+                        <NavLink to='/login' className="ml-2 uppercase font-bold">Login</NavLink>
                     }
 
                 </ul>
