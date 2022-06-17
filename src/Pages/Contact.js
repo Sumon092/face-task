@@ -1,43 +1,47 @@
-
-import { useQuery } from 'react-query';
-import Loading from './Shared/Loading';
+import Loading from '../Pages/Shared/Loading'
 import UserInfo from './UserInfo';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 const Contact = () => {
     const [users, setUsers] = useState([])
-    const firstPage = async () => {
-        const res = await fetch(`https://randomuser.me/api/?page=1&results=20&seed=abc`);
-        let data = await res.json();
-        const allUser = data.results
-        setUsers(allUser)
-    }
+    const [noMore, setNoMore] = useState(true);
+    const [page, setPage] = useState(2);
+
+    useEffect(() => {
+        const firstPage = async () => {
+            const res = await fetch(`https://randomuser.me/api/?page=1&results=20&seed=abc`);
+            let data = await res.json();
+            const allUser = data.results
+            setUsers(allUser)
+        }
+        firstPage();
+    }, [])
     const secondPage = async () => {
-        const res = await fetch(`https://randomuser.me/api/?page=2&results=20&seed=abc`);
+        const res = await fetch(`https://randomuser.me/api/?page=${page}&results=20&seed=abc`);
         let data = await res.json();
         const allUser2 = data.results
         console.log('second page', allUser2);
         return allUser2;
     }
-
     // const allUser = users.results;
-
-    firstPage();
     console.log(users);
-
     const fetchData = async () => {
         const loadUsersData = await secondPage()
         setUsers([...users, ...loadUsersData]);
-
+        if (loadUsersData.length === 0 || loadUsersData.length < 20) {
+            setNoMore(false);
+        }
+        setPage(page + 1);
     }
     return (
         <InfiniteScroll className='px-24 bg-transparent'
-            dataLength={users.length} //This is important field to render the next data
+            dataLength={users.length}
             next={fetchData}
-            hasMore={true}
-            loader={<h4>Loading...</h4>}
+            hasMore={noMore}
+            loader={<Loading></Loading>}
             endMessage={
                 <p style={{ textAlign: 'center' }}>
                     <b>Yay! You have seen it all</b>
@@ -46,7 +50,7 @@ const Contact = () => {
             }
         >
             {
-                <table class="table w-full bg-transparent">
+                <table className="table w-full bg-transparent">
 
                     <thead>
                         <tr>

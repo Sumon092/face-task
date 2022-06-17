@@ -8,6 +8,7 @@ import Navbar from './Pages/Shared/Navbar';
 import backgroundImage from './assets/home/rm218batch4-ning-34.jpg'
 import RequiredAuth from './Pages/Login/RequiredAuth';
 import Contact from './Pages/Contact';
+import Loading from './Pages/Shared/Loading';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
+        <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/home' element={<Home></Home>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signUp' element={<SignUp></SignUp>}></Route>
