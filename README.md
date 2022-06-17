@@ -1,6 +1,15 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [FACE_Task](https://face-task.web.app/).
+[FACE_Task](https://face-task.web.app/).
+## Project description
+<ol>
+    <li>Authenticated app, accept fake login with email and  password</li>
+    <li>Post login is home. accessible only logged in user</li>
+    <li>After login it shows logout button</li>
+    <li>Mobile responsive</li>
+    <li>Infinite scroll loading</li>
+</ol>
+
 ## Technology used
     - React
     - firebase for Authentication
