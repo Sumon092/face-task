@@ -50,7 +50,7 @@ const Contact = () => {
             }
         >
             {
-                <table className="table w-full bg-transparent">
+                <table className="table w-full bg-white">
 
                     <thead>
                         <tr>
