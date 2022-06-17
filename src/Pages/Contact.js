@@ -3,23 +3,38 @@ import { useQuery } from 'react-query';
 import Loading from './Shared/Loading';
 import UserInfo from './UserInfo';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useState } from 'react';
 
 
 const Contact = () => {
-    const { data: users, isLoading } = useQuery('users', async () => await fetch(`https://randomuser.me/api/?page=1&results=20&seed=abc`).then(res => res.json()));
-
-    if (isLoading) {
-        return <Loading></Loading>
+    const [users, setUsers] = useState([])
+    const firstPage = async () => {
+        const res = await fetch(`https://randomuser.me/api/?page=1&results=20&seed=abc`);
+        let data = await res.json();
+        const allUser = data.results
+        setUsers(allUser)
     }
-    const allUser = users.results;
-    console.log(allUser);
+    const secondPage = async () => {
+        const res = await fetch(`https://randomuser.me/api/?page=2&results=20&seed=abc`);
+        let data = await res.json();
+        const allUser2 = data.results
+        console.log('second page', allUser2);
+        return allUser2;
+    }
 
-    const fetchData = () => {
-        console.log('hello');
+    // const allUser = users.results;
+
+    firstPage();
+    console.log(users);
+
+    const fetchData = async () => {
+        const loadUsersData = await secondPage()
+        setUsers([...users, ...loadUsersData]);
+
     }
     return (
-        <InfiniteScroll
-            dataLength={allUser.length} //This is important field to render the next data
+        <InfiniteScroll className='px-24 bg-transparent'
+            dataLength={users.length} //This is important field to render the next data
             next={fetchData}
             hasMore={true}
             loader={<h4>Loading...</h4>}
@@ -31,7 +46,7 @@ const Contact = () => {
             }
         >
             {
-                <table class="table w-full">
+                <table class="table w-full bg-transparent">
 
                     <thead>
                         <tr>
@@ -42,7 +57,7 @@ const Contact = () => {
                         </tr>
                     </thead>
                     {
-                        allUser.map(user => <UserInfo key={user.cell} user={user}></UserInfo>)
+                        users.map(user => <UserInfo key={user.cell} user={user}></UserInfo>)
                     }
                 </table>
             }
