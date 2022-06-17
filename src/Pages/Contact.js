@@ -1,18 +1,35 @@
-import React, { useEffect, useState } from 'react';
+
 import { useQuery } from 'react-query';
 import Loading from './Shared/Loading';
 import UserInfo from './UserInfo';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-const Contact = (id) => {
-    const { data: users, isLoading } = useQuery('products', () => fetch('https://randomuser.me/api/?results=500').then(res => res.json()));
+
+const Contact = () => {
+    const { data: users, isLoading } = useQuery('users', async () => await fetch(`https://randomuser.me/api/?page=1&results=20&seed=abc`).then(res => res.json()));
+
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(users);
     const allUser = users.results;
-    return (
-        <div className='lg:px-24 px-0'>
+    console.log(allUser);
 
+    const fetchData = () => {
+        console.log('hello');
+    }
+    return (
+        <InfiniteScroll
+            dataLength={allUser.length} //This is important field to render the next data
+            next={fetchData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+                <p style={{ textAlign: 'center' }}>
+                    <b>Yay! You have seen it all</b>
+                </p>
+
+            }
+        >
             {
                 <table class="table w-full">
 
@@ -29,7 +46,8 @@ const Contact = (id) => {
                     }
                 </table>
             }
-        </div>
+
+        </InfiniteScroll>
     );
 };
 

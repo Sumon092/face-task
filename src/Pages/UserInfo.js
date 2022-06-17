@@ -6,7 +6,7 @@ const UserInfo = ({ user }) => {
     return (
 
 
-        <tbody>
+        <tbody className=''>
             <tr>
                 <td>
                     <div class="flex items-center space-x-3">
