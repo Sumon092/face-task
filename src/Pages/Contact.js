@@ -22,12 +22,12 @@ const Contact = () => {
     const secondPage = async () => {
         const res = await fetch(`https://randomuser.me/api/?page=${page}&results=20&seed=abc`);
         let data = await res.json();
-        const allUser2 = data.results
-        console.log('second page', allUser2);
-        return allUser2;
+        const allUser = data.results
+        // console.log('second page', allUser);
+        return allUser;
     }
     // const allUser = users.results;
-    console.log(users);
+    // console.log(users);
     const fetchData = async () => {
         const loadUsersData = await secondPage()
         setUsers([...users, ...loadUsersData]);
@@ -37,14 +37,14 @@ const Contact = () => {
         setPage(page + 1);
     }
     return (
-        <InfiniteScroll className='px-24 bg-transparent'
+        <InfiniteScroll className='lg:px-24'
             dataLength={users.length}
             next={fetchData}
             hasMore={noMore}
             loader={<Loading></Loading>}
             endMessage={
                 <p style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
+                    <b>There are no users more</b>
                 </p>
 
             }
@@ -56,8 +56,7 @@ const Contact = () => {
                         <tr>
                             <th>Name</th>
                             <th>Location</th>
-                            <th>Phone</th>
-                            <th>Detail</th>
+                            <th className='hidden lg:block'>Phone</th>
                         </tr>
                     </thead>
                     {

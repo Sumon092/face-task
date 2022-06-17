@@ -26,10 +26,7 @@ const UserInfo = ({ user }) => {
                     <br />
                     <span className="badge badge-ghost badge-sm">{location.city}</span>
                 </td>
-                <td>{phone}</td>
-                <th>
-                    <button className="btn btn-ghost btn-xs">details</button>
-                </th>
+                <td className='hidden lg:block'>{phone}</td>
             </tr>
         </tbody>
 

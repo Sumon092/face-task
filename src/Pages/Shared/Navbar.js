@@ -29,7 +29,7 @@ const Navbar = () => {
                     </div>
 
                 </div>
-                <div className="hidden lg:flex justify-between px-24">
+                <div className="hidden lg:flex justify-between px-24 navBar">
                     <div className="btn btn-ghost normal-case text-2xl font-bold text-blue-400">Face</div>
                     <div className='flex '>
                         <div> {user && <p className='text-blue-500 font-bold text-xl text-end'><Link to='/'>Home</Link></p>}</div>
